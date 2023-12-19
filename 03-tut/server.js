@@ -14,18 +14,18 @@ const PORT = process.env.PORT || 3500;
 
 const serveFile = async (filePath, contentType, response) => {
   try {
-    const data = await fsPromises.readFile(filePath, "utf8");
-    response.statusCode(200, { "Content-Type": contentType });
-    response.end(data);
+    const rawData = await fsPromises.readFile(filePath, !contentType.includes("image") ? "utf8" : "");
+    const data = contentType === "application/json" ? JSON.parse(rawData) : rawData;
+    response.writeHead(filePath.includes("404.html") ? 404 : 200, { "Content-Type": contentType });
+    response.end(contentType === "application/json" ? JSON.stringify(data) : data);
   } catch (error) {
     console.log(error);
-    response.statusCode(500);
+    response.writeHead(500);
     response.end();
   }
 };
 
 const server = http.createServer((req, res) => {
-  console.log(res);
   const extension = path.extname(req.url);
 
   let contentType;
@@ -36,6 +36,9 @@ const server = http.createServer((req, res) => {
       break;
     case ".js":
       contentType = "text/javascript";
+      break;
+    case ".json":
+      contentType = "application/json";
       break;
     case ".jpg":
       contentType = "image/jpg";
@@ -77,7 +80,6 @@ const server = http.createServer((req, res) => {
         res.end();
         break;
       default:
-        // serve a 404 response
         serveFile(path.join(__dirname, "views", "404.html"), "text/html", res);
     }
   }
@@ -86,5 +88,3 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-// nastavi od 25:00 - how to build a web server with node js
