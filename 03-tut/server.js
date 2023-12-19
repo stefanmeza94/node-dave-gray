@@ -9,7 +9,7 @@ const EventEmmiter = require("events");
 class Emmiter extends EventEmmiter {}
 
 const myEmmiter = new Emmiter();
-
+myEmmiter.on("log", (msg, fileName) => logEvents(msg, fileName));
 const PORT = process.env.PORT || 3500;
 
 const serveFile = async (filePath, contentType, response) => {
@@ -19,13 +19,14 @@ const serveFile = async (filePath, contentType, response) => {
     response.writeHead(filePath.includes("404.html") ? 404 : 200, { "Content-Type": contentType });
     response.end(contentType === "application/json" ? JSON.stringify(data) : data);
   } catch (error) {
-    console.log(error);
+    myEmmiter.emit("log", `${error.name}: ${error.message}`, "errorLog.txt");
     response.writeHead(500);
     response.end();
   }
 };
 
 const server = http.createServer((req, res) => {
+  myEmmiter.emit("log", `${req.url}\t${req.method}`, "reqLog.txt");
   const extension = path.extname(req.url);
 
   let contentType;
