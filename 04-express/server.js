@@ -17,6 +17,7 @@ app.get("/old-page(.html)?", (req, res) => {
   res.redirect(301, "new-page.html");
 });
 
+// route handlers
 app.get(
   "/hello(.html)?",
   (req, res, next) => {
