@@ -1,0 +1,6 @@
+20231225	23:40:43	a0889200-5673-474e-a064-835a9cd58de1	GET	undefined	/
+20231225	23:40:43	cf70c79c-5359-4f19-a316-7922e3d8f3b1	GET	undefined	/css/style.css
+20231225	23:40:50	475fe3af-1e96-4337-b26a-57d650ccb4d6	GET	undefined	/
+20231225	23:40:50	05b294bd-5045-48cd-a380-83b30c1b40e5	GET	undefined	/css/style.css
+20231225	23:42:14	1bf4fffa-3a39-4dc6-81b9-b71ad1451746	OPTIONS	https://www.google.com	/
+20231225	23:42:14	4b831a9b-c291-4e72-9705-708c79f62f5d	GET	https://www.google.com	/
