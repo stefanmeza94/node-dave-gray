@@ -89,3 +89,5 @@ app.all("*", (req, res) => {
 app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// nastavi od How to Setup Routes with Express Router
